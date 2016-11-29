@@ -3,6 +3,8 @@ package com.arrowhc.harry.arrowhc;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,10 +26,13 @@ import java.util.HashMap;
 public class Staff_Activity extends AppCompatActivity {
     TextView tv;ListView lv;ArrayList<HashMap<String,String>> arrayList;String id,name;
     RequestQueue requestQueue;
+    ImageButton addb,searchb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_);
+
         //initialize requestqueue && Arraylist
         requestQueue= Volley.newRequestQueue(getBaseContext());
         arrayList=new ArrayList<>();
@@ -61,10 +66,10 @@ public class Staff_Activity extends AppCompatActivity {
                             for (int i = 0; i <response.length(); i++) {
                                 JSONObject jresponse = response.getJSONObject(i);
                                 String name = jresponse.getString("patient_name");
-                                String did = jresponse.getString("doc_id");
-                                String nurse= jresponse.getString("nurse_id");
+                                String did = jresponse.getString("doc_name");
+                                String nurse= jresponse.getString("nurse_name");
                                 String room = jresponse.getString("room_no");
-                                String pswd=jresponse.getString("password");
+                                String deptt=jresponse.getString("department");
                                 //  da=da+name+","+did;
                                 //  String dept = jresponse.getString("department");
                                 HashMap<String,String> contact = new HashMap<>();
@@ -73,8 +78,8 @@ public class Staff_Activity extends AppCompatActivity {
                                 contact.put("didd",did);
                                 contact.put("nursee",nurse);
                                 contact.put("roomm",room);
-                                contact.put("paswd",pswd);
-                                 da=contact.get("namee");
+                                contact.put("dept",deptt);
+                              //  da=contact.get("namee");
                                 Toast.makeText(Staff_Activity.this,da, Toast.LENGTH_SHORT).show();
 
                                 //Toast.makeText(Sign_In.this, name+","+usern+","+pswd, Toast.LENGTH_SHORT).show();
@@ -86,7 +91,7 @@ public class Staff_Activity extends AppCompatActivity {
                                 ListAdapter adapter = new SimpleAdapter(
                                         Staff_Activity.this, arrayList,
                                         R.layout.list_item, new String[]{"namee","nursee","didd",
-                                        "roomm","paswd"}, new int[]{R.id.patient,
+                                        "roomm","dept"}, new int[]{R.id.patient,
                                         R.id.doctor, R.id.nurse,R.id.room,R.id.dept});
 
                                 lv.setAdapter(adapter);
